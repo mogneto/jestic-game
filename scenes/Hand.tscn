@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1y45mwf6sdtq"]
+
+[ext_resource type="Script" path="res://scripts/Hand.gd" id="1_m47t1"]
+[ext_resource type="PackedScene" uid="uid://cgxkudsol5xuo" path="res://scenes/cards/TrickCard_Coin.tscn" id="2_xak1a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_de22l"]
+radius = 1000.0
+
+[node name="Hand" type="Node2D"]
+script = ExtResource("1_m47t1")
+angle_limit = 25.0
+max_card_spread_angle = 5.0
+
+[node name="TestCard" parent="." instance=ExtResource("2_xak1a")]
+
+[node name="debugShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_de22l")

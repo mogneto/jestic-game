@@ -1,0 +1,212 @@
+[gd_scene load_steps=16 format=3 uid="uid://bkfuuit6g4l4y"]
+
+[ext_resource type="Script" path="res://scripts/Character.gd" id="1_jaj3m"]
+[ext_resource type="Texture2D" uid="uid://d3rth70pmycjy" path="res://icon.svg" id="1_nnnmf"]
+[ext_resource type="Script" path="res://scenes/Main.gd" id="1_qb5b6"]
+[ext_resource type="PackedScene" uid="uid://dyf4i77556vy3" path="res://scenes/Deck_n_hand.tscn" id="1_qe0ov"]
+[ext_resource type="FontFile" uid="uid://ckg2yjl0485pn" path="res://fonts/early_gameboy/Early GameBoy.ttf" id="2_62qhn"]
+[ext_resource type="Script" path="res://scripts/GameController.gd" id="2_c2k8i"]
+[ext_resource type="Texture2D" uid="uid://kfai8p61uihn" path="res://sprites/bbeg_head.png" id="2_mfcfi"]
+[ext_resource type="PackedScene" uid="uid://dxoypr1a527wb" path="res://scenes/ui/DeckViewWindow.tscn" id="3_sojo2"]
+[ext_resource type="Texture2D" uid="uid://h2asomumfxby" path="res://sprites/bbeg_hand.png" id="3_vw6o6"]
+[ext_resource type="Texture2D" uid="uid://c036r027n6j2n" path="res://sprites/shield.png" id="4_53514"]
+[ext_resource type="PackedScene" uid="uid://ct6exrpk4lg2f" path="res://scenes/Field.tscn" id="7_t8o4q"]
+[ext_resource type="FontFile" uid="uid://bf0kqe3g5cieu" path="res://fonts/visitor/visitor2.ttf" id="8_070nv"]
+[ext_resource type="Texture2D" uid="uid://duj74be6jfqqr" path="res://sprites/cardback.png" id="12_0kks0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_17dj5"]
+font = ExtResource("2_62qhn")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_ivfhe"]
+font = ExtResource("8_070nv")
+font_size = 26
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("player_character")]
+script = ExtResource("1_qb5b6")
+player_character = NodePath("GameScreen/PlayerCharacter")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameOverOverlay" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.745098, 0.0470588, 0.258824, 0.513726)
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOverOverlay"]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 256.0
+offset_right = 650.0
+offset_bottom = 308.0
+text = "Game Over"
+label_settings = SubResource("LabelSettings_17dj5")
+horizontal_alignment = 1
+
+[node name="VictoryOverlay" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.290196, 0.654902, 0.309804, 0.513726)
+
+[node name="Label" type="Label" parent="CanvasLayer/VictoryOverlay"]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 256.0
+offset_right = 651.0
+offset_bottom = 308.0
+text = "Victory!!!"
+label_settings = SubResource("LabelSettings_17dj5")
+horizontal_alignment = 1
+
+[node name="DeckViewWindow" parent="CanvasLayer" instance=ExtResource("3_sojo2")]
+
+[node name="GameController" type="Node2D" parent="."]
+script = ExtResource("2_c2k8i")
+
+[node name="GameScreen" type="Node2D" parent="."]
+
+[node name="PlayerField" parent="GameScreen" instance=ExtResource("7_t8o4q")]
+position = Vector2(480, 408)
+field_length = Vector2(800, 140)
+
+[node name="EnemyField" parent="GameScreen" instance=ExtResource("7_t8o4q")]
+position = Vector2(480, 135)
+rotation = 3.14159
+scale = Vector2(-1, 1)
+script = null
+
+[node name="DeckButton" type="TextureButton" parent="GameScreen"]
+offset_left = 152.0
+offset_top = 304.0
+offset_right = 312.0
+offset_bottom = 560.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("12_0kks0")
+
+[node name="PlayerCharacter" type="Node2D" parent="GameScreen"]
+position = Vector2(880, 464)
+script = ExtResource("1_jaj3m")
+
+[node name="Sprite" type="Sprite2D" parent="GameScreen/PlayerCharacter"]
+texture = ExtResource("1_nnnmf")
+
+[node name="HealthBar" type="ProgressBar" parent="GameScreen/PlayerCharacter"]
+offset_left = -171.0
+offset_top = 36.0
+offset_right = -71.0
+offset_bottom = 46.0
+max_value = 20.0
+step = 1.0
+value = 20.0
+fill_mode = 1
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="ArmorSprite" type="Sprite2D" parent="GameScreen/PlayerCharacter"]
+visible = false
+position = Vector2(-88, 16)
+texture = ExtResource("4_53514")
+
+[node name="Label" type="Label" parent="GameScreen/PlayerCharacter/ArmorSprite"]
+offset_left = -56.0
+offset_top = -8.0
+offset_right = -16.0
+offset_bottom = 15.0
+text = "0"
+horizontal_alignment = 2
+
+[node name="EnemyCharacter" type="Node2D" parent="GameScreen"]
+position = Vector2(80, 80)
+script = ExtResource("1_jaj3m")
+
+[node name="Sprite" type="Sprite2D" parent="GameScreen/EnemyCharacter"]
+texture = ExtResource("2_mfcfi")
+
+[node name="HealthBar" type="ProgressBar" parent="GameScreen/EnemyCharacter"]
+offset_left = 40.0
+offset_top = -5.0
+offset_right = 140.0
+offset_bottom = 5.0
+max_value = 20.0
+step = 1.0
+value = 20.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite_Hand" type="Sprite2D" parent="GameScreen/EnemyCharacter"]
+texture = ExtResource("3_vw6o6")
+
+[node name="ArmorSprite" type="Sprite2D" parent="GameScreen/EnemyCharacter"]
+visible = false
+position = Vector2(56, -24)
+texture = ExtResource("4_53514")
+
+[node name="Label" type="Label" parent="GameScreen/EnemyCharacter/ArmorSprite"]
+offset_left = 16.0
+offset_top = -8.0
+offset_right = 56.0
+offset_bottom = 15.0
+text = "0"
+
+[node name="GoldPool" type="Label" parent="."]
+offset_left = 910.0
+offset_top = 297.0
+offset_right = 934.5
+offset_bottom = 322.0
+text = "10"
+label_settings = SubResource("LabelSettings_ivfhe")
+horizontal_alignment = 1
+
+[node name="DeckNHand" parent="." instance=ExtResource("1_qe0ov")]
+
+[node name="dmg1" type="Button" parent="."]
+offset_left = 712.0
+offset_top = 24.0
+offset_right = 768.0
+offset_bottom = 55.0
+text = "dmg 1
+"
+
+[node name="dmg3" type="Button" parent="."]
+offset_left = 776.0
+offset_top = 24.0
+offset_right = 832.0
+offset_bottom = 55.0
+text = "dmg 3
+"
+
+[node name="EndTurn" type="Button" parent="."]
+offset_left = 816.0
+offset_top = 256.0
+offset_right = 894.0
+offset_bottom = 287.0
+text = "End Turn"
+
+[node name="StartGame" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 432.0
+offset_top = 256.0
+offset_right = 528.0
+offset_bottom = 287.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start Game"
+
+[connection signal="button_up" from="GameScreen/DeckButton" to="." method="_on_deck_button_button_up"]
+[connection signal="card_activated" from="DeckNHand" to="." method="_on_deck_n_hand_card_activated"]
+[connection signal="button_up" from="dmg1" to="." method="_on_dmg_1_button_up"]
+[connection signal="button_up" from="dmg3" to="." method="_on_dmg_3_button_up"]
+[connection signal="button_up" from="EndTurn" to="." method="_on_end_turn_button_up"]
+[connection signal="button_up" from="StartGame" to="." method="_on_start_game_button_up"]

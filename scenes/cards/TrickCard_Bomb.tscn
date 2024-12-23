@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dy3d0784impdm"]
+
+[ext_resource type="Script" path="res://scripts/cards/UsuableCard.gd" id="1_u7817"]
+[ext_resource type="PackedScene" uid="uid://og43g2q7y64w" path="res://scenes/Card.tscn" id="2_0xll5"]
+[ext_resource type="Texture2D" uid="uid://d2mdi1x75uwpa" path="res://sprites/bomb_pic.png" id="3_gab3m"]
+[ext_resource type="Script" path="res://scripts/cards/TrickAction_Bomb.gd" id="4_7u1ve"]
+
+[node name="TrickCardBomb" type="Node2D" node_paths=PackedStringArray("action")]
+script = ExtResource("1_u7817")
+action = NodePath("TrickAction_Bomb")
+
+[node name="Card" parent="." instance=ExtResource("2_0xll5")]
+card_name = "Bomb"
+card_description = "[trick]               put a bomb counter on target servant or structure an opponent controls."
+
+[node name="cardImage" type="Sprite2D" parent="."]
+position = Vector2(0, -54)
+texture = ExtResource("3_gab3m")
+
+[node name="TrickAction_Bomb" type="Node2D" parent="."]
+script = ExtResource("4_7u1ve")
+
+[connection signal="mouse_entered" from="Card" to="." method="_on_card_mouse_entered"]
+[connection signal="mouse_exited" from="Card" to="." method="_on_card_mouse_exited"]

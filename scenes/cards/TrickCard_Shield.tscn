@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://w2b1gyeahlpx"]
+
+[ext_resource type="Script" path="res://scripts/cards/UsuableCard.gd" id="1_wibl7"]
+[ext_resource type="PackedScene" uid="uid://og43g2q7y64w" path="res://scenes/Card.tscn" id="2_hjs6r"]
+[ext_resource type="Texture2D" uid="uid://gshinnb50bek" path="res://sprites/shield_pic.png" id="3_kvavy"]
+[ext_resource type="Script" path="res://scripts/cards/TrickAction_Shield.gd" id="4_vswib"]
+
+[node name="TrickCardShield" type="Node2D" node_paths=PackedStringArray("action")]
+script = ExtResource("1_wibl7")
+action = NodePath("TrickCardAction_Shield")
+
+[node name="Card" parent="." instance=ExtResource("2_hjs6r")]
+card_name = "Shield"
+card_description = "[trick]               you gain 1 armor."
+
+[node name="cardImage" type="Sprite2D" parent="."]
+position = Vector2(0, -54)
+texture = ExtResource("3_kvavy")
+
+[node name="TrickCardAction_Shield" type="Node2D" parent="."]
+script = ExtResource("4_vswib")
+
+[connection signal="mouse_entered" from="Card" to="." method="_on_card_mouse_entered"]
+[connection signal="mouse_exited" from="Card" to="." method="_on_card_mouse_exited"]

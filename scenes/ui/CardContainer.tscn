@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvya8mdu78gsa"]
+
+[ext_resource type="Script" path="res://scripts/ui/card_container.gd" id="1_4vc5h"]
+[ext_resource type="PackedScene" uid="uid://ghcdbhdixvto" path="res://scenes/cards/ServantCard.tscn" id="1_tmrw1"]
+
+[node name="CardContainer" type="Container"]
+clip_contents = true
+custom_minimum_size = Vector2(120, 192)
+script = ExtResource("1_4vc5h")
+
+[node name="ServantCard" parent="." instance=ExtResource("1_tmrw1")]
+position = Vector2(60, 96)
+scale = Vector2(0.75, 0.75)

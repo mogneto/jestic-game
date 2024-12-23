@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://ct6exrpk4lg2f"]
+
+[ext_resource type="Script" path="res://scripts/Field.gd" id="1_r28hn"]
+[ext_resource type="Texture2D" uid="uid://cwkht06688mlf" path="res://sprites/mesa.png" id="2_4yc4u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vc1s3"]
+size = Vector2(800, 200)
+
+[node name="Field" type="Node2D"]
+position = Vector2(480, 320)
+script = ExtResource("1_r28hn")
+field_length = Vector2(800, 200)
+
+[node name="CardSlot" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="CardSlot"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_4yc4u")
+
+[node name="debugShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_vc1s3")
+debug_color = Color(0.635294, 0.470588, 0, 0.6)

@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://ghcdbhdixvto"]
+
+[ext_resource type="Script" path="res://scripts/cards/UsuableCard.gd" id="1_4ayyw"]
+[ext_resource type="PackedScene" uid="uid://og43g2q7y64w" path="res://scenes/Card.tscn" id="2_eixmr"]
+[ext_resource type="Texture2D" uid="uid://cbmjhn1yqvqii" path="res://sprites/unit_box.png" id="3_0eoie"]
+[ext_resource type="FontFile" uid="uid://bd1fhhbruhm75" path="res://fonts/visitor/visitor1.ttf" id="4_w35t6"]
+[ext_resource type="Texture2D" uid="uid://btoffn7r7lx4v" path="res://sprites/grave_pic.png" id="5_jgiy2"]
+[ext_resource type="Script" path="res://scripts/cards/ServantAction.gd" id="6_pkpbg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c3fam"]
+font = ExtResource("4_w35t6")
+font_size = 10
+font_color = Color(0.968627, 0.933333, 0.87451, 1)
+
+[node name="ServantCard" type="Node2D" node_paths=PackedStringArray("action")]
+script = ExtResource("1_4ayyw")
+action = NodePath("ServantAction")
+
+[node name="Card" parent="." instance=ExtResource("2_eixmr")]
+card_name = "zombie"
+card_description = "[undead servant] Attack: 2 defense: 2 "
+card_cost = 2
+
+[node name="creatureBox" type="Node2D" parent="Card"]
+visible = false
+position = Vector2(50, 107)
+
+[node name="unitBox" type="Sprite2D" parent="Card/creatureBox"]
+texture = ExtResource("3_0eoie")
+
+[node name="powerLbl" type="Label" parent="Card/creatureBox"]
+offset_left = -12.0
+offset_top = -5.0
+offset_right = 12.0
+offset_bottom = 7.0
+text = "2/2"
+label_settings = SubResource("LabelSettings_c3fam")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cardImage" type="Sprite2D" parent="."]
+position = Vector2(0, -54)
+texture = ExtResource("5_jgiy2")
+
+[node name="ServantAction" type="Node2D" parent="."]
+script = ExtResource("6_pkpbg")
+
+[connection signal="mouse_entered" from="Card" to="." method="_on_card_mouse_entered"]
+[connection signal="mouse_exited" from="Card" to="." method="_on_card_mouse_exited"]
