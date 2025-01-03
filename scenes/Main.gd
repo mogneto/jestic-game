@@ -12,6 +12,8 @@ extends Node2D
 	
 @onready var game_control: GameController = $GameController
 @onready var deck_view_overlay: DeckViewWindow = $CanvasLayer/DeckViewWindow as DeckViewWindow
+@onready var deck_ui: PlayableDeckUI = $PlayableDeckUi
+@onready var deck_n_hand = $DeckNHand
 
 var enemy_character_state: int = 0
 
@@ -21,10 +23,10 @@ func restart_game():
 	game_control.current_state = GameController.GameState.PLAYER_TURN
 	$GameScreen/PlayerCharacter.reset()
 	$GameScreen/EnemyCharacter.reset()
-	$DeckNHand.reset()
+	deck_n_hand.reset()
 	
 func _ready():
-	$DeckNHand.deck = deck
+	deck_n_hand.deck = deck
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float):
@@ -80,7 +82,7 @@ func _on_deck_n_hand_card_activated(card: UsuableCard) -> void:
 			"targets": [$GameScreen/PlayerField, $GameScreen/EnemyCharacter]
 			
 		})
-		$DeckNHand.remove_card(card)
+		deck_n_hand.remove_card(card)
 		card.queue_free()
 	else:
 		pass
@@ -107,9 +109,16 @@ func _on_deck_button_button_up() -> void:
 		deck_view_overlay.visible = true
 		deck_view_overlay.display_card_list(deck.get_cards())
 	else:
-		game_control.resume()
 		deck_view_overlay.visible = false
+		game_control.resume()
 
 func _on_start_game_button_up() -> void:
-	deck.get_playable_deck()
+	deck_ui.deck = deck.get_playable_deck()
+	deck_ui.visible = true
 	pass # Replace with function body.
+
+func _on_playable_deck_ui_button_up() -> void:
+	var card_with_id = deck_ui.draw()
+	
+	if card_with_id:
+		deck_n_hand.add_card(card_with_id)

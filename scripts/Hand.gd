@@ -11,8 +11,8 @@ signal card_activated(card: UsuableCard)
 @onready var test_card = $TestCard
 @onready var collision_shape: CollisionShape2D = $debugShape
 
-var hand: Array = []
-var touched: Array = []
+var hand: Array[UsuableCard] = []
+var touched: Array[UsuableCard] = []
 var current_selected_card_index: int = -1
 
 func empty_hand():
@@ -22,7 +22,7 @@ func empty_hand():
 	hand = []
 	touched = []
 
-func add_card(card: Node2D):
+func add_card(card: UsuableCard):
 	hand.push_back(card)
 	add_child(card)
 	card.mouse_entered.connect(_handle_card_touched)
@@ -37,7 +37,7 @@ func remove_card(index: int) -> Node2D:
 	reposition_cards()
 	return removing_card
 
-func remove_card_by_entity(card: Node2D):
+func remove_card_by_entity(card: UsuableCard):
 	var remove_index = hand.find(card)
 	remove_card(remove_index)
 
@@ -54,7 +54,7 @@ func get_card_position(angle_in_deg: float) -> Vector2:
 	
 	return Vector2(int(x), int(y))
 
-func _update_card_transform(card: Node2D, angle_in_drag: float):
+func _update_card_transform(card: UsuableCard, angle_in_drag: float):
 	card.set_position(get_card_position(angle_in_drag))
 	card.set_rotation(deg_to_rad(angle_in_drag + 90))
 	card.scale = Vector2(0.75, 0.75)
@@ -62,7 +62,7 @@ func _update_card_transform(card: Node2D, angle_in_drag: float):
 func _handle_card_touched(card):
 	touched.push_back(card)
 
-func _handle_card_untouched(card: Node2D):
+func _handle_card_untouched(card: UsuableCard):
 	touched.remove_at(touched.find(card))
 
 func _ready():

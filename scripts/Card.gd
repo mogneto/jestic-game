@@ -33,10 +33,10 @@ func _update_graphics():
 		description_lbl.set_text(card_description.to_lower())
 		
 func highlight():
-	base_sprite.set_modulate(Color(1, .5, .1, 1))
+	base_sprite.texture = load("res://sprites/cardtemplate_hover.png")
 	
 func unhighlight():
-	base_sprite.set_modulate(Color(1, 1, 1, 1))
+	base_sprite.texture = load("res://sprites/cardtemplate.png")
 	
 func activate():
 	pass

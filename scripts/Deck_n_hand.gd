@@ -26,25 +26,28 @@ func _process(delta):
 
 func reset():
 	$Hand.empty_hand()
+	
+func add_card(card_with_id: CardWithID):
+	$Hand.add_card(card_with_id.card)
 
 func remove_card(card: Node2D):
 	$Hand.remove_card_by_entity(card)
 
 func _on_button_button_up():
 	var spell_card_coin = card_scene_spell_coin.instantiate()
-	hand.add_card(spell_card_coin)
+	deck.add_card(spell_card_coin)
 	
 func _on_button_2_button_up():
 	var unit_card = card_scene_unit.instantiate()
-	hand.add_card(unit_card)
+	deck.add_card(unit_card)
 
 func _on_button_3_button_up():
 	var spell_card_bomb = card_scene_spell_bomb.instantiate()
-	hand.add_card(spell_card_bomb)
+	deck.add_card(spell_card_bomb)
 
 func _on_button_4_button_up() -> void:
 	var spell_card_shield = card_scene_spell_shield.instantiate()
-	hand.add_card(spell_card_shield)
+	deck.add_card(spell_card_shield)
 
 func _on_hand_card_activated(card):
 	card_activated.emit(card)

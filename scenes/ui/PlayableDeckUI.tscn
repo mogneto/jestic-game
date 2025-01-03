@@ -1,3 +1,10 @@
-[gd_scene format=3 uid="uid://mbh02u0j1e8y"]
+[gd_scene load_steps=4 format=3 uid="uid://mbh02u0j1e8y"]
 
-[node name="PlayableDeckUi" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://duj74be6jfqqr" path="res://sprites/cardback.png" id="1_4oq41"]
+[ext_resource type="Script" path="res://scripts/ui/PlayableDeckUI.gd" id="2_nurun"]
+[ext_resource type="Texture2D" uid="uid://qxfb0uepco40" path="res://sprites/cardback_hover.png" id="2_ya4pf"]
+
+[node name="PlayableDeckUi" type="TextureButton"]
+texture_normal = ExtResource("1_4oq41")
+texture_hover = ExtResource("2_ya4pf")
+script = ExtResource("2_nurun")

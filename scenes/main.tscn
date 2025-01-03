@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bkfuuit6g4l4y"]
+[gd_scene load_steps=18 format=3 uid="uid://bkfuuit6g4l4y"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_jaj3m"]
 [ext_resource type="Texture2D" uid="uid://d3rth70pmycjy" path="res://icon.svg" id="1_nnnmf"]
@@ -10,9 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://dxoypr1a527wb" path="res://scenes/ui/DeckViewWindow.tscn" id="3_sojo2"]
 [ext_resource type="Texture2D" uid="uid://h2asomumfxby" path="res://sprites/bbeg_hand.png" id="3_vw6o6"]
 [ext_resource type="Texture2D" uid="uid://c036r027n6j2n" path="res://sprites/shield.png" id="4_53514"]
+[ext_resource type="Texture2D" uid="uid://n8tiygq7mbup" path="res://sprites/olho.png" id="6_181hw"]
+[ext_resource type="Texture2D" uid="uid://n7us8aaivo7r" path="res://sprites/olho_fechado.png" id="6_iyped"]
 [ext_resource type="PackedScene" uid="uid://ct6exrpk4lg2f" path="res://scenes/Field.tscn" id="7_t8o4q"]
 [ext_resource type="FontFile" uid="uid://bf0kqe3g5cieu" path="res://fonts/visitor/visitor2.ttf" id="8_070nv"]
-[ext_resource type="Texture2D" uid="uid://duj74be6jfqqr" path="res://sprites/cardback.png" id="12_0kks0"]
+[ext_resource type="PackedScene" uid="uid://mbh02u0j1e8y" path="res://scenes/ui/PlayableDeckUI.tscn" id="13_721yc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_17dj5"]
 font = ExtResource("2_62qhn")
@@ -82,14 +84,6 @@ position = Vector2(480, 135)
 rotation = 3.14159
 scale = Vector2(-1, 1)
 script = null
-
-[node name="DeckButton" type="TextureButton" parent="GameScreen"]
-offset_left = 152.0
-offset_top = 304.0
-offset_right = 312.0
-offset_bottom = 560.0
-scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("12_0kks0")
 
 [node name="PlayerCharacter" type="Node2D" parent="GameScreen"]
 position = Vector2(880, 464)
@@ -165,6 +159,14 @@ text = "10"
 label_settings = SubResource("LabelSettings_ivfhe")
 horizontal_alignment = 1
 
+[node name="PlayableDeckUi" parent="." instance=ExtResource("13_721yc")]
+visible = false
+offset_left = 176.0
+offset_top = 304.0
+offset_right = 336.0
+offset_bottom = 560.0
+scale = Vector2(0.5, 0.5)
+
 [node name="DeckNHand" parent="." instance=ExtResource("1_qe0ov")]
 
 [node name="dmg1" type="Button" parent="."]
@@ -204,9 +206,19 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Start Game"
 
-[connection signal="button_up" from="GameScreen/DeckButton" to="." method="_on_deck_button_button_up"]
+[node name="DeckButton" type="TextureButton" parent="."]
+offset_left = 136.0
+offset_top = 352.0
+offset_right = 200.0
+offset_bottom = 416.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("6_iyped")
+texture_hover = ExtResource("6_181hw")
+
+[connection signal="button_up" from="PlayableDeckUi" to="." method="_on_playable_deck_ui_button_up"]
 [connection signal="card_activated" from="DeckNHand" to="." method="_on_deck_n_hand_card_activated"]
 [connection signal="button_up" from="dmg1" to="." method="_on_dmg_1_button_up"]
 [connection signal="button_up" from="dmg3" to="." method="_on_dmg_3_button_up"]
 [connection signal="button_up" from="EndTurn" to="." method="_on_end_turn_button_up"]
 [connection signal="button_up" from="StartGame" to="." method="_on_start_game_button_up"]
+[connection signal="button_up" from="DeckButton" to="." method="_on_deck_button_button_up"]
